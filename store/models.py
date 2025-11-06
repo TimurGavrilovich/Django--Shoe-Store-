@@ -41,3 +41,66 @@ class Product(models.Model):
     
     def __str__(self):
         return self.name
+    
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product,related_name='images',on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='products/')
+
+    def __str__(self):
+        return f"Image for {self.product.name}"
+    
+class Review(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)    
+
+    def _str_(self):
+        return f"Review for {self.user.username} by {self.product.name}"
+    
+class Order(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('processing', 'Processing'),
+        ('shipped', 'Shipped'),
+        ('delivered', 'Delivered'),
+        ('cancelled', 'Cancelled'),
+    ]
+
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email=models.EmailField()
+    address = models.CharField(max_length=250)
+    postal_code = models.CharField(max_length=20)
+    city = models.CharField(max_length=100)
+    country = models.CharField(max_length=100, default='United States')
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    paid = models.BooleanField(default=False)
+    items = models.ManyToManyField('OrderItem', related_name='orders')
+
+
+
+    class Meta:
+        ordering = ('-created',)
+
+    def __str__(self):
+        return f"Order #{self.pk}"
+    def get_total_cost(self):
+        return sum(item.get_cost() for item in self.items.all())
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.PositiveIntegerField(default=1)
+    
+ 
+    def __str__(self):
+        return str(self.pk)
+    
+    def get_cost(self):
+        return self.price * self.quantity
