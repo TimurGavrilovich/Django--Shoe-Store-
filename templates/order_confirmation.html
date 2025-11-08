@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card text-center">
+        <div class="card-body">
+            <i class="bi bi-check-circle-fill text-success display-1"></i>
+            <h1 class="card-title">Order Confirmed!</h1>
+            <p class="card-text">Thank you for your order. Your order number is <strong>#{{ order.id }}</strong>.</p>
+            <p class="card-text">We've sent a confirmation email to <strong>{{ order.email }}</strong>.</p>
+            <div class="mt-4">
+                <a href="{% url 'store:home' %}" class="btn btn-primary">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
