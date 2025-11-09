@@ -4,45 +4,77 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-6">
-            <div class="bg-light rounded" style="height: 400px; display: flex; align-items: center; justify-content: center;">
-                <i class="fas fa-shoe-prints fa-5x text-muted"></i>
+            <div class="product-image-main bg-light rounded-3" style="height: 500px; display: flex; align-items: center; justify-content: center; background: linear-gradient(45deg, #ff9a9e, #fad0c4);">
+                <i class="fas fa-shoe-prints fa-8x text-white"></i>
             </div>
         </div>
         <div class="col-md-6">
-            <h1>{{ product.name }}</h1>
-            <p class="text-muted">{{ product.brand.name }}</p>
-            
-            {% if product.is_on_sale %}
-            <div class="d-flex align-items-center mb-3">
-                <h2 class="text-danger me-3">${{ product.discount_price }}</h2>
-                <span class="text-muted text-decoration-line-through me-3">${{ product.price }}</span>
-                <span class="badge bg-danger">Save {{ product.sale_percentage }}%</span>
+            <div class="ps-4">
+                {% if product.is_on_sale %}
+                <span class="badge bg-danger fs-6 mb-3" style="background: var(--gradient-secondary) !important;">Sale {{ product.sale_percentage }}% OFF</span>
+                {% endif %}
+                <span class="badge bg-info fs-6 mb-3 ms-2">New Arrival</span>
+                
+                <h1 class="fw-bold mb-3">{{ product.name }}</h1>
+                <p class="text-muted fs-5 mb-4">{{ product.brand.name }}</p>
+                
+                {% if product.is_on_sale %}
+                <div class="d-flex align-items-center mb-4">
+                    <h2 class="text-danger fw-bold me-3">${{ product.discount_price }}</h2>
+                    <span class="text-muted text-decoration-line-through fs-4 me-3">${{ product.price }}</span>
+                    <span class="badge bg-warning text-dark fs-6">Save ${{ product.price|floatformat:2|add:"-"|add:product.discount_price|floatformat:2 }}</span>
+                </div>
+                {% else %}
+                <h2 class="text-primary fw-bold mb-4">${{ product.price }}</h2>
+                {% endif %}
+                
+                <p class="mb-4 fs-5">{{ product.description }}</p>
+                
+                <div class="mb-4 p-3 rounded-3" style="background: rgba(102, 126, 234, 0.1);">
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>Gender:</strong> {{ product.get_gender_display }}
+                        </div>
+                        <div class="col-6">
+                            <strong>Category:</strong> {{ product.category.name }}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="form-label fw-bold fs-5"><strong>Select Size:</strong></label>
+                    <div class="d-flex flex-wrap">
+                        {% for size in product.sizes.all %}
+                        {% if size.quantity > 0 %}
+                        <div class="size-option" onclick="selectSize(this)" data-size="{{ size.size }}">
+                            US {{ size.size }}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary btn-lg w-100 py-3 fs-5" onclick="addToCart({{ product.id }}, getSelectedSize())" style="border-radius: 15px;">
+                    <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                </button>
+
+                <div class="mt-4">
+                    <div class="d-flex justify-content-around text-center">
+                        <div>
+                            <i class="fas fa-shipping-fast fa-2x text-primary mb-2"></i>
+                            <p class="mb-0 small">Free Shipping</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-undo-alt fa-2x text-primary mb-2"></i>
+                            <p class="mb-0 small">30-Day Returns</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-award fa-2x text-primary mb-2"></i>
+                            <p class="mb-0 small">1 Year Warranty</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            {% else %}
-            <h2 class="mb-3">${{ product.price }}</h2>
-            {% endif %}
-            
-            <p class="mb-4">{{ product.description }}</p>
-            
-            <div class="mb-4">
-                <strong>Gender:</strong> {{ product.get_gender_display }}<br>
-                <strong>Category:</strong> {{ product.category.name }}
-            </div>
-            
-            <div class="mb-4">
-                <label for="sizeSelect" class="form-label"><strong>Select Size:</strong></label>
-                <select id="sizeSelect" class="form-select">
-                    {% for size in product.sizes.all %}
-                    {% if size.quantity > 0 %}
-                    <option value="{{ size.size }}">US {{ size.size }} ({{ size.quantity }} available)</option>
-                    {% endif %}
-                    {% endfor %}
-                </select>
-            </div>
-            
-            <button class="btn btn-primary btn-lg w-100" onclick="addToCart({{ product.id }}, document.getElementById('sizeSelect').value)">
-                <i class="fas fa-cart-plus me-2"></i>Add to Cart
-            </button>
         </div>
     </div>
     
@@ -50,20 +82,23 @@
     {% if related_products %}
     <div class="row mt-5">
         <div class="col-12">
-            <h3>Related Products</h3>
+            <h3 class="section-title">Related Products</h3>
             <div class="row">
                 {% for related_product in related_products %}
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card product-card h-100">
-                        <div class="card-img-top bg-light" style="height: 200px; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-shoe-prints fa-3x text-muted"></i>
+                <div class="col-lg-3 col-md-6">
+                    <div class="product-card">
+                        <div class="image-container" style="background: linear-gradient(45deg, #a1c4fd, #c2e9fb);">
+                            <i class="fas fa-shoe-prints fa-3x text-white"></i>
+                            <div class="category-badge">{{ related_product.category.name }}</div>
                         </div>
                         <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">{{ related_product.name }}</h5>
-                            <p class="card-text">{{ related_product.brand.name }}</p>
+                            <h5 class="card-title fw-bold">{{ related_product.name }}</h5>
+                            <p class="card-text text-muted">{{ related_product.brand.name }}</p>
                             <div class="mt-auto">
-                                <span class="fw-bold">${{ related_product.price }}</span>
-                                <a href="{% url 'product_detail' related_product.slug %}" class="btn btn-outline-primary btn-sm mt-2 w-100">View Details</a>
+                                <span class="price-tag">${{ related_product.price }}</span>
+                                <a href="{% url 'product_detail' related_product.slug %}" class="btn btn-outline-primary btn-sm mt-2 w-100">
+                                    View Details
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -74,4 +109,26 @@
     </div>
     {% endif %}
 </div>
+
+<script>
+    function getSelectedSize() {
+        const selected = document.querySelector('.size-option.active');
+        return selected ? selected.getAttribute('data-size') : null;
+    }
+
+    function selectSize(element) {
+        document.querySelectorAll('.size-option').forEach(opt => {
+            opt.classList.remove('active');
+        });
+        element.classList.add('active');
+    }
+
+    // Select first size by default
+    document.addEventListener('DOMContentLoaded', function() {
+        const firstSize = document.querySelector('.size-option');
+        if (firstSize) {
+            firstSize.classList.add('active');
+        }
+    });
+</script>
 {% endblock %}

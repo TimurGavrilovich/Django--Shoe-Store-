@@ -33,7 +33,8 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    image = models.ImageField(upload_to='products/')
+    image = models.ImageField(upload_to='products/', blank=True, null=True)
+    image_url = models.URLField(blank=True, null=True)
     featured = models.BooleanField(default=False)
     in_stock = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -51,6 +52,16 @@ class Product(models.Model):
         if self.is_on_sale:
             return int(((self.price - self.discount_price) / self.price) * 100)
         return 0
+    
+    @property
+    def display_image(self):
+        """Return either the uploaded image or the external image URL"""
+        if self.image:
+            return self.image.url
+        elif self.image_url:
+            return self.image_url
+        else:
+            return None
 
 class ProductSize(models.Model):
     product = models.ForeignKey(Product, related_name='sizes', on_delete=models.CASCADE)

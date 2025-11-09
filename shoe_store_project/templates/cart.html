@@ -2,44 +2,50 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h1>Shopping Cart</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold">Shopping Cart</h1>
+        <span class="badge bg-primary fs-6 p-3" style="background: var(--gradient-primary) !important;">{{ cart.items.count }} items</span>
+    </div>
     
     {% if cart.items.all %}
     <div class="row">
         <div class="col-lg-8">
             {% for item in cart.items.all %}
-            <div class="card mb-3">
+            <div class="cart-item-card">
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row align-items-center">
                         <div class="col-md-2">
-                            <div class="bg-light rounded" style="height: 80px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-shoe-prints fa-2x text-muted"></i>
+                            <div class="rounded-3" style="height: 100px; display: flex; align-items: center; justify-content: center; background: linear-gradient(45deg, #ff9a9e, #fad0c4);">
+                                <i class="fas fa-shoe-prints fa-2x text-white"></i>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <h5>{{ item.product.name }}</h5>
-                            <p class="text-muted">{{ item.product.brand.name }}</p>
-                            <p>Size: US {{ item.size }}</p>
                         </div>
                         <div class="col-md-4">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="fw-bold">
-                                    ${{ item.product.discount_price|default:item.product.price }}
-                                </span>
-                                <div class="input-group input-group-sm" style="width: 120px;">
-                                    <button class="btn btn-outline-secondary" type="button" 
-                                            onclick="updateCartItem({{ item.id }}, {{ item.quantity|add:'-1' }})">-</button>
-                                    <input type="text" class="form-control text-center" value="{{ item.quantity }}" readonly>
-                                    <button class="btn btn-outline-secondary" type="button" 
-                                            onclick="updateCartItem({{ item.id }}, {{ item.quantity|add:'1' }})">+</button>
+                            <h5 class="fw-bold mb-1">{{ item.product.name }}</h5>
+                            <p class="text-muted mb-1">{{ item.product.brand.name }}</p>
+                            <p class="mb-0"><strong>Size:</strong> US {{ item.size }}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="d-flex align-items-center">
+                                <div class="quantity-control d-flex align-items-center">
+                                    <button class="btn btn-outline-secondary border-0" type="button" 
+                                            onclick="updateCartItem({{ item.id }}, {{ item.quantity|add:'-1' }})">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <input type="text" class="form-control text-center border-0" value="{{ item.quantity }}" readonly style="width: 50px;">
+                                    <button class="btn btn-outline-secondary border-0" type="button" 
+                                            onclick="updateCartItem({{ item.id }}, {{ item.quantity|add:'1' }})">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span>Total: ${{ item.total_price }}</span>
-                                <button class="btn btn-danger btn-sm" onclick="updateCartItem({{ item.id }}, 0)">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="fw-bold fs-5 text-primary">${{ item.total_price }}</span>
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-danger btn-sm" onclick="updateCartItem({{ item.id }}, 0)" style="border-radius: 50%; width: 40px; height: 40px;">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -48,33 +54,67 @@
         </div>
         
         <div class="col-lg-4">
-            <div class="card">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header py-3" style="background: var(--gradient-primary); color: white; border-radius: 15px 15px 0 0;">
+                    <h5 class="mb-0"><i class="fas fa-receipt me-2"></i>Order Summary</h5>
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title">Order Summary</h5>
-                    <div class="d-flex justify-content-between mb-2">
-                        <span>Subtotal:</span>
-                        <span>${{ cart.total_price }}</span>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Subtotal ({{ cart.items.count }} items):</span>
+                        <span class="fw-bold">${{ cart.total_price }}</span>
                     </div>
-                    <div class="d-flex justify-content-between mb-2">
+                    <div class="d-flex justify-content-between mb-3">
                         <span>Shipping:</span>
-                        <span>Free</span>
+                        <span class="text-success fw-bold">Free</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Tax:</span>
+                        <span>${{ cart.total_price|floatformat:2|add:"0"|floatformat:2 }}</span>
                     </div>
                     <hr>
-                    <div class="d-flex justify-content-between mb-3">
-                        <strong>Total:</strong>
-                        <strong>${{ cart.total_price }}</strong>
+                    <div class="d-flex justify-content-between mb-4">
+                        <strong class="fs-5">Total:</strong>
+                        <strong class="fs-4 text-primary">${{ cart.total_price }}</strong>
                     </div>
-                    <button class="btn btn-primary w-100" disabled>Proceed to Checkout (Coming Soon)</button>
+                    <button class="btn btn-primary w-100 py-3 fs-5 disabled" style="border-radius: 15px;">
+                        <i class="fas fa-lock me-2"></i>Proceed to Checkout
+                    </button>
+                    <div class="text-center mt-3">
+                        <small class="text-muted">Checkout functionality coming soon!</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mt-4">
+                <div class="card-body text-center">
+                    <i class="fas fa-gift fa-2x text-primary mb-3"></i>
+                    <h6>Free Shipping</h6>
+                    <p class="small text-muted mb-0">On all orders over $50</p>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <a href="{% url 'product_list' %}" class="btn btn-outline-primary me-3">
+                <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+            </a>
+            <button class="btn btn-primary disabled">
+                <i class="fas fa-shopping-bag me-2"></i>Checkout
+            </button>
+        </div>
+    </div>
     {% else %}
-    <div class="text-center py-5">
-        <i class="fas fa-shopping-cart fa-4x text-muted mb-3"></i>
-        <h3>Your cart is empty</h3>
-        <p class="text-muted">Start shopping to add items to your cart</p>
-        <a href="{% url 'product_list' %}" class="btn btn-primary">Continue Shopping</a>
+    <div class="empty-cart">
+        <div class="empty-cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+        </div>
+        <h3 class="fw-bold mb-3">Your cart is empty</h3>
+        <p class="text-muted mb-4 fs-5">Start shopping to add items to your cart</p>
+        <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg px-5">
+            <i class="fas fa-shopping-bag me-2"></i>Continue Shopping
+        </a>
     </div>
     {% endif %}
 </div>

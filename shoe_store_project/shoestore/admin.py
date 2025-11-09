@@ -21,6 +21,20 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ['price', 'in_stock', 'featured']
     prepopulated_fields = {'slug': ('name',)}
     inlines = [ProductSizeInline]
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'slug', 'description', 'category', 'brand', 'gender')
+        }),
+        ('Pricing', {
+            'fields': ('price', 'discount_price')
+        }),
+        ('Images', {
+            'fields': ('image', 'image_url')
+        }),
+        ('Status', {
+            'fields': ('featured', 'in_stock')
+        }),
+    )
 
 admin.site.register(Cart)
 admin.site.register(CartItem)
