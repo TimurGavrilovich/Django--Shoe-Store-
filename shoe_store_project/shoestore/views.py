@@ -5,8 +5,8 @@ from shoestore.models import Product, Category, Brand, Cart, CartItem
 import json
 
 def home(request):
-    featured_products = Product.objects.filter(featured=True, in_stock=True)[:8]
-    new_arrivals = Product.objects.filter(in_stock=True).order_by('-created_at')[:8]
+    featured_products = Product.objects.filter(featured=True, in_stock=True)[:12]  # Increased from 8 to 12
+    new_arrivals = Product.objects.filter(in_stock=True).order_by('-created_at')[:12]  # Increased from 8 to 12
     
     context = {
         'featured_products': featured_products,

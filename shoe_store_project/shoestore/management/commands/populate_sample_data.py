@@ -5,6 +5,11 @@ class Command(BaseCommand):
     help = 'Populate database with sample shoe data'
 
     def handle(self, *args, **options):
+        # Clear existing data
+        Product.objects.all().delete()
+        Category.objects.all().delete()
+        Brand.objects.all().delete()
+
         # Create categories
         categories = [
             {'name': 'Sneakers', 'slug': 'sneakers'},
@@ -18,11 +23,11 @@ class Command(BaseCommand):
             Category.objects.get_or_create(**cat_data)
         
         # Create brands
-        brands = ['Nike', 'Adidas', 'Puma', 'New Balance', 'Vans', 'Converse']
+        brands = ['Nike', 'Adidas', 'Puma', 'New Balance', 'Vans', 'Converse', 'Reebok', 'Under Armour']
         for brand_name in brands:
             Brand.objects.get_or_create(name=brand_name)
         
-        # Sample products data with real shoe images from Unsplash
+        # Sample products data with REAL shoe images from Unsplash
         products_data = [
             {
                 'name': 'Nike Air Max 270',
@@ -192,6 +197,50 @@ class Command(BaseCommand):
                 'gender': 'W',
                 'featured': True,
                 'image_url': 'https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8c25lYWtlcnN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
+            },
+            {
+                'name': 'Reebok Classic Leather',
+                'slug': 'reebok-classic-leather',
+                'description': 'Timeless Reebok Classic Leather sneakers with premium comfort and style.',
+                'price': 80.00,
+                'category': 'Casual',
+                'brand': 'Reebok',
+                'gender': 'U',
+                'featured': False,
+                'image_url': 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmVlYm9rJTIwc2hvZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
+            },
+            {
+                'name': 'Under Armour Running',
+                'slug': 'under-armour-running',
+                'description': 'High-performance Under Armour running shoes with advanced cushioning technology.',
+                'price': 125.00,
+                'category': 'Running',
+                'brand': 'Under Armour',
+                'gender': 'U',
+                'featured': False,
+                'image_url': 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c2hvZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
+            },
+            {
+                'name': 'Hiking Boots',
+                'slug': 'hiking-boots',
+                'description': 'Durable hiking boots with waterproof technology and superior traction.',
+                'price': 145.00,
+                'category': 'Boots',
+                'brand': 'New Balance',
+                'gender': 'U',
+                'featured': True,
+                'image_url': 'https://images.unsplash.com/photo-1608256246202-9eb7d4e8e74e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aGlraW5nJTIwYm9vdHN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
+            },
+            {
+                'name': 'Skate Shoes',
+                'slug': 'skate-shoes',
+                'description': 'Durable skate shoes with reinforced stitching and superior board feel.',
+                'price': 70.00,
+                'category': 'Casual',
+                'brand': 'Vans',
+                'gender': 'U',
+                'featured': False,
+                'image_url': 'https://images.unsplash.com/photo-1597045566677-8cf032f4c154?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHNrYXRlJTIwc2hvZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
             }
         ]
         
@@ -214,7 +263,11 @@ class Command(BaseCommand):
             
             # Add sizes
             if created:
-                sizes = [7.0, 8.0, 9.0, 10.0, 11.0, 12.0]
+                if product_data['gender'] == 'W':
+                    sizes = [5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
+                else:
+                    sizes = [7.0, 8.0, 9.0, 10.0, 11.0, 12.0]
+                
                 for size in sizes:
                     ProductSize.objects.create(
                         product=product,
@@ -223,5 +276,5 @@ class Command(BaseCommand):
                     )
         
         self.stdout.write(
-            self.style.SUCCESS('Successfully populated database with sample data and real shoe images!')
+            self.style.SUCCESS(f'Successfully populated database with {len(products_data)} products and real shoe images!')
         )
