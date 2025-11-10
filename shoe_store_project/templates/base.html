@@ -9,28 +9,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --accent: #f093fb;
-            --success: #4cd964;
-            --warning: #ff9500;
-            --danger: #ff3b30;
-            --light: #f8f9fa;
-            --dark: #2c3e50;
-            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --gradient-warning: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            --primary: #0d9488;      /* Teal */
+            --secondary: #7e22ce;    /* Purple */
+            --accent: #ec4899;       /* Pink */
+            --success: #10b981;      /* Emerald */
+            --warning: #f59e0b;      /* Amber */
+            --danger: #ef4444;       /* Red */
+            --light: #f8fafc;        /* Light slate */
+            --dark: #1e293b;         /* Dark slate */
+            --gradient-primary: linear-gradient(135deg, #0d9488 0%, #7e22ce 100%);
+            --gradient-secondary: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            --gradient-warning: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #f0fdfa 0%, #faf5ff 100%);
             min-height: 100vh;
         }
 
         .navbar {
             background: var(--gradient-primary) !important;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(13, 148, 136, 0.2);
         }
 
         .navbar-brand {
@@ -72,14 +72,14 @@
             border: none;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(13, 148, 136, 0.1);
             background: white;
             margin-bottom: 30px;
         }
 
         .product-card:hover {
             transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 40px rgba(13, 148, 136, 0.15);
         }
 
         .sale-badge {
@@ -92,7 +92,7 @@
             border-radius: 25px;
             font-size: 0.8rem;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(240, 147, 251, 0.3);
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
             z-index: 3;
         }
 
@@ -122,7 +122,7 @@
         .image-container {
             position: relative;
             overflow: hidden;
-            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            background: linear-gradient(45deg, #a5f3fc, #c7d2fe);
             height: 250px;
             display: flex;
             align-items: center;
@@ -163,7 +163,7 @@
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 20px rgba(13, 148, 136, 0.4);
         }
 
         .btn-outline-primary {
@@ -203,7 +203,7 @@
             background: white;
             border-radius: 20px;
             border: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(13, 148, 136, 0.1);
         }
 
         .filter-card .card-header {
@@ -215,7 +215,7 @@
         }
 
         .footer {
-            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
             color: white;
             padding: 50px 0 20px;
             margin-top: 80px;
@@ -261,13 +261,13 @@
             padding: 30px;
             background: white;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(13, 148, 136, 0.1);
             transition: all 0.3s ease;
         }
 
         .feature-box:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 40px rgba(13, 148, 136, 0.15);
         }
 
         .newsletter-section {
@@ -295,7 +295,7 @@
 
         .product-image-main {
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(13, 148, 136, 0.1);
             overflow: hidden;
         }
 
@@ -325,7 +325,7 @@
         .cart-item-card {
             border-radius: 20px;
             border: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(13, 148, 136, 0.1);
             margin-bottom: 20px;
             overflow: hidden;
         }
@@ -341,6 +341,16 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
+        }
+
+        .category-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         }
     </style>
 </head>
@@ -452,9 +462,9 @@
                 </div>
                 <div class="col-lg-3 mb-4">
                     <h5>Contact Info</h5>
-                    <p><i class="fas fa-map-marker-alt me-2"></i> Minsk, Belarus</p>
-                    <p><i class="fas fa-phone me-2"></i> + 375 (29) 619-87-97 </p>
-                    <p><i class="fas fa-envelope me-2"></i> <a href="mailto:gavrilovich99@inbox.ru">gavrilovich99@inbox.ru</a></p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> 123 Shoe Street, Fashion City</p>
+                    <p><i class="fas fa-phone me-2"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope me-2"></i> <a href="mailto:gavrilovich99@inbox.ru" class="text-light text-decoration-none">gavrilovich99@inbox.ru</a></p>
                 </div>
             </div>
             <hr class="bg-light">
@@ -562,6 +572,19 @@
                 });
                 card.addEventListener('mouseleave', function() {
                     this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add hover effects to category cards
+            const categoryCards = document.querySelectorAll('.category-card');
+            categoryCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 15px 30px rgba(0,0,0,0.2)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '';
                 });
             });
         });
