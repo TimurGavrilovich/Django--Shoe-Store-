@@ -100,32 +100,40 @@
         <h2 class="section-title">Shop by Category</h2>
         <div class="row">
             <div class="col-md-3 mb-4">
-                <div class="category-card text-center p-4 rounded-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-                    <i class="fas fa-running fa-3x mb-3"></i>
-                    <h5>Running</h5>
-                    <p class="mb-0">Performance shoes</p>
-                </div>
+                <a href="{% url 'product_list' %}?category=sneakers" class="text-decoration-none">
+                    <div class="category-card text-center p-4 rounded-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        <i class="fas fa-running fa-3x mb-3"></i>
+                        <h5>Sneakers</h5>
+                        <p class="mb-0">Performance shoes</p>
+                    </div>
+                </a>
             </div>
             <div class="col-md-3 mb-4">
-                <div class="category-card text-center p-4 rounded-3" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
-                    <i class="fas fa-sneaker fa-3x mb-3"></i>
-                    <h5>Sneakers</h5>
-                    <p class="mb-0">Casual & stylish</p>
-                </div>
+                <a href="{% url 'product_list' %}?category=running" class="text-decoration-none">
+                    <div class="category-card text-center p-4 rounded-3" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+                        <i class="fas fa-sneaker fa-3x mb-3"></i>
+                        <h5>Running</h5>
+                        <p class="mb-0">Casual & stylish</p>
+                    </div>
+                </a>
             </div>
             <div class="col-md-3 mb-4">
-                <div class="category-card text-center p-4 rounded-3" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white;">
-                    <i class="fas fa-boot fa-3x mb-3"></i>
-                    <h5>Boots</h5>
-                    <p class="mb-0">Durable & strong</p>
-                </div>
+                <a href="{% url 'product_list' %}?category=casual" class="text-decoration-none">
+                    <div class="category-card text-center p-4 rounded-3" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white;">
+                        <i class="fas fa-boot fa-3x mb-3"></i>
+                        <h5>Casual</h5>
+                        <p class="mb-0">Durable & strong</p>
+                    </div>
+                </a>
             </div>
             <div class="col-md-3 mb-4">
-                <div class="category-card text-center p-4 rounded-3" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white;">
-                    <i class="fas fa-suitcase fa-3x mb-3"></i>
-                    <h5>Formal</h5>
-                    <p class="mb-0">Elegant & classy</p>
-                </div>
+                <a href="{% url 'product_list' %}?category=formal" class="text-decoration-none">
+                    <div class="category-card text-center p-4 rounded-3" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white;">
+                        <i class="fas fa-suitcase fa-3x mb-3"></i>
+                        <h5>Formal</h5>
+                        <p class="mb-0">Elegant & classy</p>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

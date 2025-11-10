@@ -40,7 +40,7 @@
         }
 
         .hero-section {
-            background: var(--gradient-secondary), url('https://images.unsplash.com/photo-1542291026-7eec264c27ff');
+            background: var(--gradient-secondary), url('/media/products/karsten-winegeart-JEChDyvo22c-unsplash.jpg');
             background-size: cover;
             background-position: center;
             background-blend-mode: overlay;
@@ -58,7 +58,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.2); /* Lighter overlay for better image visibility */
             z-index: 1;
         }
 
@@ -109,6 +109,18 @@
             z-index: 3;
         }
 
+        .category-badge {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            position: absolute;
+            top: 15px;
+            right: 15px; /* Moved to right side */
+            z-index: 2;
+        }
+
         .card-img-top {
             height: 250px;
             object-fit: cover;
@@ -127,17 +139,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .category-badge {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-size: 0.7rem;
-            position: absolute;
-            top: 15px;
-            left: 15px;
         }
 
         .price-tag {
@@ -346,11 +347,19 @@
         .category-card {
             transition: all 0.3s ease;
             cursor: pointer;
+            height: 100%;
         }
 
         .category-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Ensure the link covers the entire card */
+        .category-section a {
+            display: block;
+            height: 100%;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -454,22 +463,22 @@
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5>Categories</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-light text-decoration-none">Sneakers</a></li>
-                        <li><a href="#" class="text-light text-decoration-none">Running Shoes</a></li>
-                        <li><a href="#" class="text-light text-decoration-none">Casual Shoes</a></li>
-                        <li><a href="#" class="text-light text-decoration-none">Formal Shoes</a></li>
+                        <li><a href="{% url 'product_list' %}?category=sneakers" class="text-light text-decoration-none">Sneakers</a></li>
+                        <li><a href="{% url 'product_list' %}?category=running" class="text-light text-decoration-none">Running Shoes</a></li>
+                        <li><a href="{% url 'product_list' %}?category=casual" class="text-light text-decoration-none">Casual Shoes</a></li>
+                        <li><a href="{% url 'product_list' %}?category=formal" class="text-light text-decoration-none">Formal Shoes</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 mb-4">
                     <h5>Contact Info</h5>
-                    <p><i class="fas fa-map-marker-alt me-2"></i> 123 Shoe Street, Fashion City</p>
-                    <p><i class="fas fa-phone me-2"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> Minsk, Belarus</p>
+                    <p><i class="fas fa-phone me-2"></i> + 375 29 619-87-97 </p>
                     <p><i class="fas fa-envelope me-2"></i> <a href="mailto:gavrilovich99@inbox.ru" class="text-light text-decoration-none">gavrilovich99@inbox.ru</a></p>
                 </div>
             </div>
             <hr class="bg-light">
             <div class="text-center">
-                <p>&copy; 2024 StepStyle. All rights reserved. | Designed with <i class="fas fa-heart text-danger"></i></p>
+                <p>&copy; 2025 StepStyle. All rights reserved. </i></p>
             </div>
         </div>
     </footer>
@@ -579,8 +588,8 @@
             const categoryCards = document.querySelectorAll('.category-card');
             categoryCards.forEach(card => {
                 card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px)';
-                    this.style.boxShadow = '0 15px 30px rgba(0,0,0,0.2)';
+                    this.style.transform = 'translateY(-10px)';
+                    this.style.boxShadow = '0 20px 40px rgba(0,0,0,0.3)';
                 });
                 card.addEventListener('mouseleave', function() {
                     this.style.transform = 'translateY(0)';
